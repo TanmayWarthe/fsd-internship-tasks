@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="card">
+    <h1>Thanks, <%= data.name %>!</h1>
+    <p>We will reach you at <strong><%= data.email %></strong>.</p>
+    <p>Your message:</p>
+    <blockquote><%= data.message %></blockquote>
+    <p><small>Submitted at: <%= submittedAt %></small></p>
+    <p><a href="/">Go Back</a></p>
+  </main>
+</body>
+</html>
