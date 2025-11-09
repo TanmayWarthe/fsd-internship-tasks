@@ -13,9 +13,9 @@
     <h1>Registration Form</h1>
 
     <form name="myForm" action="/submit" method="POST" onsubmit="return validateForm()">
-      <label style="display:block; margin:10px 0;">Name:
-        <input type="text" name="name" value="<%= values.name || '' %>" style="border:1px solid blue;">
-        <% if (errors.name) { %><div class="error"><%= errors.name %></div><% } %>
+      <label style="display:block; margin:10px 0;">Full Name:
+        <input type="text" name="fullname" value="<%= values.fullname || '' %>" style="border:1px solid blue;">
+        <% if (errors.fullname) { %><div class="error"><%= errors.fullname %></div><% } %>
       </label>
 
       <label style="display:block; margin:10px 0;">Email:
@@ -23,15 +23,44 @@
         <% if (errors.email) { %><div class="error"><%= errors.email %></div><% } %>
       </label>
 
-      <label style="display:block; margin:10px 0;">Age:
-        <input type="number" name="age" value="<%= values.age || '' %>" style="border:1px solid purple;">
-        <% if (errors.age) { %><div class="error"><%= errors.age %></div><% } %>
+      <label style="display:block; margin:10px 0;">Password:
+        <input type="password" name="password" value="" style="border:1px solid #333;">
+        <% if (errors.password) { %><div class="error"><%= errors.password %></div><% } %>
       </label>
 
-      <label style="display:block; margin:10px 0;">Gender:
-        <input type="radio" name="gender" value="male" <%= values.gender === 'male' ? 'checked' : '' %> > Male
-        <input type="radio" name="gender" value="female" <%= values.gender === 'female' ? 'checked' : '' %> > Female
+      <label style="display:block; margin:10px 0;">Confirm Password:
+        <input type="password" name="confirmPassword" value="" style="border:1px solid #333;">
+        <% if (errors.confirmPassword) { %><div class="error"><%= errors.confirmPassword %></div><% } %>
+      </label>
+
+      <fieldset style="border:0; padding:0; margin:10px 0;">
+        <legend>Gender:</legend>
+        <label><input type="radio" name="gender" value="male" <%= values.gender === 'male' ? 'checked' : '' %> > Male</label>
+        <label><input type="radio" name="gender" value="female" <%= values.gender === 'female' ? 'checked' : '' %> > Female</label>
+        <label><input type="radio" name="gender" value="other" <%= values.gender === 'other' ? 'checked' : '' %> > Other</label>
         <% if (errors.gender) { %><div class="error"><%= errors.gender %></div><% } %>
+      </fieldset>
+
+      <fieldset style="border:0; padding:0; margin:10px 0;">
+        <legend>Hobbies:</legend>
+        <label><input type="checkbox" name="hobbies" value="reading" <%= (values.hobbies||[]).includes('reading') ? 'checked' : '' %> > Reading</label>
+        <label><input type="checkbox" name="hobbies" value="sports" <%= (values.hobbies||[]).includes('sports') ? 'checked' : '' %> > Sports</label>
+        <label><input type="checkbox" name="hobbies" value="music" <%= (values.hobbies||[]).includes('music') ? 'checked' : '' %> > Music</label>
+        <label><input type="checkbox" name="hobbies" value="travel" <%= (values.hobbies||[]).includes('travel') ? 'checked' : '' %> > Travel</label>
+        <label><input type="checkbox" name="hobbies" value="coding" <%= (values.hobbies||[]).includes('coding') ? 'checked' : '' %> > Coding</label>
+        <% if (errors.hobbies) { %><div class="error"><%= errors.hobbies %></div><% } %>
+      </fieldset>
+
+      <label style="display:block; margin:10px 0;">City:
+        <select name="city">
+          <option value="">-- Select City --</option>
+          <option value="Delhi" <%= values.city === 'Delhi' ? 'selected' : '' %>>Delhi</option>
+          <option value="Nagpur" <%= values.city === 'Nagpur' ? 'selected' : '' %>>Nagpur</option>
+          <option value="Pune" <%= values.city === 'Pune' ? 'selected' : '' %>>Pune</option>
+          <option value="Mumbai" <%= values.city === 'Mumbai' ? 'selected' : '' %>>Mumbai</option>
+          <option value="Other" <%= values.city === 'Other' ? 'selected' : '' %>>Other</option>
+        </select>
+        <% if (errors.city) { %><div class="error"><%= errors.city %></div><% } %>
       </label>
 
       <label style="display:block; margin:10px 0;">
@@ -42,8 +71,8 @@
       <button type="submit">Submit</button>
 
       <a href="/submissions">
-  <button type="button" style="margin-top:1rem;">View All Submissions</button>
-</a>
+        <button type="button" style="margin-top:1rem;">View All Submissions</button>
+      </a>
 
     </form>
   </main>
@@ -51,18 +80,45 @@
   <script>
     function validateForm() {
       const form = document.forms["myForm"];
-      const name = form["name"].value.trim();
-      const age = form["age"].value.trim();
+      const fullname = form["fullname"].value.trim();
+      const email = form["email"].value.trim();
+      const password = form["password"].value;
+      const confirmPassword = form["confirmPassword"].value;
+      const gender = Array.from(form.elements['gender'] || []).some(el => el.checked);
+      const city = form["city"].value;
       const terms = form["terms"].checked;
 
-      if (name.length < 2) {
-        alert("Name must be at least 2 characters.");
+      if (fullname.length < 2) {
+        alert("Full name must be at least 2 characters.");
         return false;
       }
-      if (isNaN(age) || Number(age) <= 0) {
-        alert("Please enter a valid age.");
+
+      const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+      if (!emailPattern.test(email)) {
+        alert("Please enter a valid email address.");
         return false;
       }
+
+      if (!password || password.length < 6) {
+        alert("Password must be at least 6 characters.");
+        return false;
+      }
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return false;
+      }
+
+      if (!gender) {
+        alert("Please select a gender.");
+        return false;
+      }
+
+      if (!city) {
+        alert("Please select a city.");
+        return false;
+      }
+
       if (!terms) {
         alert("You must agree to the terms.");
         return false;
