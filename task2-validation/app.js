@@ -33,26 +33,29 @@ app.get('/', (req, res) => {
 
 // POST /submit → Process form submission
 app.post('/submit', (req, res) => {
-  const { name, email, age, gender, terms } = req.body;
+  const { fullname, email, password, confirmPassword, gender, hobbies, city, terms } = req.body;
 
   const errors = {};
-  const values = { name, email, age, gender, terms };
+  // normalize hobbies to array
+  const hobbiesArr = hobbies ? (Array.isArray(hobbies) ? hobbies : [hobbies]) : [];
+
+  const values = { fullname, email, gender, hobbies: hobbiesArr, city, terms };
 
   // Server-side validation
-  if (!name || name.trim().length < 2)
-    errors.name = 'Name must be at least 2 characters';
+  if (!fullname || fullname.trim().length < 2) errors.fullname = 'Full name must be at least 2 characters';
 
-  if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email))
-    errors.email = 'Enter a valid email address';
+  if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) errors.email = 'Enter a valid email address';
 
-  if (!age || isNaN(age) || Number(age) <= 0)
-    errors.age = 'Age must be a positive number';
+  if (!password || password.length < 6) errors.password = 'Password must be at least 6 characters';
 
-  if (!gender)
-    errors.gender = 'Please select a gender';
+  if (!confirmPassword) errors.confirmPassword = 'Please confirm your password';
+  else if (password !== confirmPassword) errors.confirmPassword = 'Passwords do not match';
 
-  if (!terms)
-    errors.terms = 'You must agree to the terms';
+  if (!gender) errors.gender = 'Please select a gender';
+
+  if (!city || city === '') errors.city = 'Please select a city';
+
+  if (!terms) errors.terms = 'You must agree to the terms';
 
   // If validation fails, re-render form with error messages and input values
   if (Object.keys(errors).length > 0) {
@@ -63,13 +66,14 @@ app.post('/submit', (req, res) => {
     });
   }
 
-  // If validation passes, store submission
+  // If validation passes, store submission (do NOT store plain passwords)
   const submission = {
-    name,
+    fullname,
     email,
-    age: Number(age),
     gender,
-    agreed: true,
+    hobbies: hobbiesArr,
+    city,
+    agreed: !!terms,
     submittedAt: new Date().toISOString()
   };
 
