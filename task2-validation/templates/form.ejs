@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .error { color: red; font-size: 0.9em; margin-top: 2px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Registration Form</h1>
+
+    <form name="myForm" action="/submit" method="POST" onsubmit="return validateForm()">
+      <label style="display:block; margin:10px 0;">Name:
+        <input type="text" name="name" value="<%= values.name || '' %>" style="border:1px solid blue;">
+        <% if (errors.name) { %><div class="error"><%= errors.name %></div><% } %>
+      </label>
+
+      <label style="display:block; margin:10px 0;">Email:
+        <input type="email" name="email" value="<%= values.email || '' %>" style="border:1px solid green;">
+        <% if (errors.email) { %><div class="error"><%= errors.email %></div><% } %>
+      </label>
+
+      <label style="display:block; margin:10px 0;">Age:
+        <input type="number" name="age" value="<%= values.age || '' %>" style="border:1px solid purple;">
+        <% if (errors.age) { %><div class="error"><%= errors.age %></div><% } %>
+      </label>
+
+      <label style="display:block; margin:10px 0;">Gender:
+        <input type="radio" name="gender" value="male" <%= values.gender === 'male' ? 'checked' : '' %> > Male
+        <input type="radio" name="gender" value="female" <%= values.gender === 'female' ? 'checked' : '' %> > Female
+        <% if (errors.gender) { %><div class="error"><%= errors.gender %></div><% } %>
+      </label>
+
+      <label style="display:block; margin:10px 0;">
+        <input type="checkbox" name="terms" value="agree" <%= values.terms ? 'checked' : '' %> > I agree to the terms
+        <% if (errors.terms) { %><div class="error"><%= errors.terms %></div><% } %>
+      </label>
+
+      <button type="submit">Submit</button>
+
+      <a href="/submissions">
+  <button type="button" style="margin-top:1rem;">View All Submissions</button>
+</a>
+
+    </form>
+  </main>
+
+  <script>
+    function validateForm() {
+      const form = document.forms["myForm"];
+      const name = form["name"].value.trim();
+      const age = form["age"].value.trim();
+      const terms = form["terms"].checked;
+
+      if (name.length < 2) {
+        alert("Name must be at least 2 characters.");
+        return false;
+      }
+      if (isNaN(age) || Number(age) <= 0) {
+        alert("Please enter a valid age.");
+        return false;
+      }
+      if (!terms) {
+        alert("You must agree to the terms.");
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+</body>
+</html>

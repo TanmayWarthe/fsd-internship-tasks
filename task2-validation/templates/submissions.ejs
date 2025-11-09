@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main>
+    <h1>📝 All Submissions</h1>
+
+    <% if (submissions.length === 0) { %>
+      <p>No submissions yet.</p>
+    <% } else { %>
+      <ul>
+        <% submissions.forEach((s, i) => { %>
+          <li>
+            <strong><%= s.name %></strong> (<%= s.email %>) —
+            Age: <%= s.age %>, Gender: <%= s.gender %>,
+            <em>Agreed: <%= s.agreed ? 'Yes' : 'No' %></em>,
+            <small><%= new Date(s.submittedAt).toLocaleString() %></small>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+    <a href="/">🔙 Back to Form</a>
+  </main>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main>
+    <h1>🎉 Submission Successful!</h1>
+    <p><strong>Name:</strong> <%= data.name %></p>
+    <p><strong>Email:</strong> <%= data.email %></p>
+    <p><strong>Age:</strong> <%= data.age %></p>
+    <p><strong>Gender:</strong> <%= data.gender %></p>
+    <p><strong>Agreed to Terms:</strong> <%= data.agreed ? 'Yes' : 'No' %></p>
+    <p><strong>Submitted At:</strong> <%= new Date(data.submittedAt).toLocaleString() %></p>
+
+    <a href="/"><button type="button" style="margin-top:1rem;">🔙 Back to Form</button></a>
+
+    <a href="/submissions">
+    <button type="button" style="margin-top:1rem;">View All Submissions</button>
+    </a>
+
+  </main>
+</body>
+</html>
