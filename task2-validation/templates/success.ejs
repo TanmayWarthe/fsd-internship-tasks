@@ -8,11 +8,12 @@
 <body>
   <main>
     <h1>🎉 Submission Successful!</h1>
-    <p><strong>Name:</strong> <%= data.name %></p>
-    <p><strong>Email:</strong> <%= data.email %></p>
-    <p><strong>Age:</strong> <%= data.age %></p>
-    <p><strong>Gender:</strong> <%= data.gender %></p>
-    <p><strong>Agreed to Terms:</strong> <%= data.agreed ? 'Yes' : 'No' %></p>
+  <p><strong>Full Name:</strong> <%= data.fullname %></p>
+  <p><strong>Email:</strong> <%= data.email %></p>
+  <p><strong>Gender:</strong> <%= data.gender %></p>
+  <p><strong>Hobbies:</strong> <%= (data.hobbies || []).join(', ') %></p>
+  <p><strong>City:</strong> <%= data.city %></p>
+  <p><strong>Agreed to Terms:</strong> <%= data.agreed ? 'Yes' : 'No' %></p>
     <p><strong>Submitted At:</strong> <%= new Date(data.submittedAt).toLocaleString() %></p>
 
     <a href="/"><button type="button" style="margin-top:1rem;">🔙 Back to Form</button></a>
