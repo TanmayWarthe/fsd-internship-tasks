@@ -15,8 +15,10 @@
       <ul>
         <% submissions.forEach((s, i) => { %>
           <li>
-            <strong><%= s.name %></strong> (<%= s.email %>) —
-            Age: <%= s.age %>, Gender: <%= s.gender %>,
+            <strong><%= s.fullname %></strong> (<%= s.email %>) —
+            Gender: <%= s.gender %>,
+            City: <%= s.city %>,
+            Hobbies: <%= (s.hobbies || []).join(', ') %>,
             <em>Agreed: <%= s.agreed ? 'Yes' : 'No' %></em>,
             <small><%= new Date(s.submittedAt).toLocaleString() %></small>
           </li>
