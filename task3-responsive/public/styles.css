@@ -1,0 +1,250 @@
+/* Task 3 - Custom styling with animations and transitions */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* navbar width consistency */
+.navbar .container {
+  max-width: 900px;
+}
+
+/* form container width */
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* card effects */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+  border: none;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* form styling improvements */
+.form-label {
+  font-weight: 500;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+.form-control,
+.form-select {
+  border-radius: 8px;
+  border: 1.5px solid #dee2e6;
+  padding: 0.65rem 0.75rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* button animations */
+.btn {
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  padding: 0.65rem 1.5rem;
+  font-weight: 500;
+}
+
+.btn:hover {
+  transform: scale(1.02);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* navbar styling */
+.navbar {
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 1rem 0;
+}
+
+.navbar-brand {
+  font-weight: 600;
+  font-size: 1.4rem;
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+  transform: scale(1.05);
+}
+
+.nav-link {
+  font-weight: 500;
+  transition: color 0.3s ease, transform 0.3s ease;
+  position: relative;
+  padding: 0.5rem 1rem !important;
+}
+
+.nav-link:hover {
+  transform: translateY(-2px);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.8);
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 80%;
+  left: 10%;
+}
+
+/* footer styling */
+footer {
+  margin-top: auto;
+  font-size: 0.9rem;
+  background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+footer p {
+  margin: 0;
+  animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* table hover */
+.table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(13, 110, 253, 0.08);
+}
+
+/* page load animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container {
+  animation: fadeInUp 0.6s ease;
+}
+
+/* button pulse effect */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(13, 110, 253, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(13, 110, 253, 0);
+  }
+}
+
+.btn-primary:hover {
+  animation: pulse 1.5s infinite;
+}
+
+/* error slide in */
+.invalid-feedback,
+.text-danger {
+  animation: slideIn 0.3s ease;
+  font-size: 0.875rem;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+footer {
+  margin-top: auto;
+  font-size: 0.9rem;
+}
+
+/* form field groups */
+.form-check-label {
+  margin-left: 0.25rem;
+  cursor: pointer;
+}
+
+.form-check-input {
+  cursor: pointer;
+}
+
+/* responsive design */
+@media (max-width: 768px) {
+  .card {
+    margin: 10px;
+  }
+  
+  .table {
+    font-size: 0.85rem;
+  }
+  
+  .navbar .container {
+    max-width: 100%;
+  }
+  
+  .form-container {
+    max-width: 100%;
+  }
+}
+
+/* success bounce */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.text-success {
+  animation: bounce 1s ease;
+}
