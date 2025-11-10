@@ -90,6 +90,7 @@
       <label for="city" class="form-label">City</label>
       <select class="form-select <%= e.city ? 'is-invalid' : '' %>" id="city" name="city" required>
         <option value="">-- Select City --</option>
+        <option value="Nagpur" <%= v.city === 'Nagpur' ? 'selected' : '' %>>Nagpur</option>
         <option value="Delhi" <%= v.city === 'Delhi' ? 'selected' : '' %>>Delhi</option>
         <option value="Mumbai" <%= v.city === 'Mumbai' ? 'selected' : '' %>>Mumbai</option>
         <option value="Kolkata" <%= v.city === 'Kolkata' ? 'selected' : '' %>>Kolkata</option>
