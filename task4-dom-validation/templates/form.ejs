@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title><%= title %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body class="bg-light">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <div class="container">
+      <a class="navbar-brand" href="/" onclick="navigate(event, '/')">MyApp</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="/" onclick="navigate(event, '/')">Form</a></li>
+          <li class="nav-item"><a class="nav-link" href="/submissions" onclick="navigate(event, '/submissions')">Submissions</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mb-5">
+    <div id="app">
+<div class="form-container">
+<% const e = errors || {}; const v = values || {}; %>
+
+<div class="card shadow p-4 animate__animated animate__fadeIn">
+  <h2 class="mb-4 text-primary text-center">Registration Form</h2>
+
+  <form action="/submit" method="POST" id="registrationForm" novalidate>
+
+    <!-- Full Name -->
+    <div class="mb-3">
+      <label for="fullname" class="form-label">Full Name</label>
+      <input 
+        type="text" 
+        class="form-control <%= e.fullname ? 'is-invalid' : '' %>" 
+        id="fullname" 
+        name="fullname" 
+        value="<%= v.fullname || '' %>" 
+        placeholder="Enter your full name" 
+        required>
+      <div class="validation-feedback" id="fullname-feedback"></div>
+      <% if (e.fullname) { %><div class="invalid-feedback d-block"><%= e.fullname %></div><% } %>
+    </div>
+
+    <!-- Email -->
+    <div class="mb-3">
+      <label for="email" class="form-label">Email Address</label>
+      <input 
+        type="email" 
+        class="form-control <%= e.email ? 'is-invalid' : '' %>" 
+        id="email" 
+        name="email" 
+        value="<%= v.email || '' %>" 
+        placeholder="example@email.com" 
+        required>
+      <div class="validation-feedback" id="email-feedback"></div>
+      <% if (e.email) { %><div class="invalid-feedback d-block"><%= e.email %></div><% } %>
+    </div>
+
+    <!-- Password with Complex Validation -->
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="password" class="form-label">Password</label>
+        <div class="password-input-wrapper">
+          <input 
+            type="password" 
+            class="form-control <%= e.password ? 'is-invalid' : '' %>" 
+            id="password" 
+            name="password" 
+            placeholder="Min 8 characters" 
+            required>
+          <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('password', this)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="eye-icon eye-open" viewBox="0 0 16 16">
+              <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+              <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="eye-icon eye-closed" style="display:none;" viewBox="0 0 16 16">
+              <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
+              <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
+              <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"/>
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Real-time validation hints -->
+        <div class="password-hints mt-2">
+          <small class="hint-item" id="hint-length">
+            <span class="hint-icon">○</span> At least 8 characters
+          </small>
+          <small class="hint-item" id="hint-uppercase">
+            <span class="hint-icon">○</span> At least 1 uppercase letter
+          </small>
+          <small class="hint-item" id="hint-number">
+            <span class="hint-icon">○</span> At least 1 number
+          </small>
+          <small class="hint-item" id="hint-special">
+            <span class="hint-icon">○</span> At least 1 special character
+          </small>
+        </div>
+        
+        <% if (e.password) { %><div class="invalid-feedback d-block"><%= e.password %></div><% } %>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="col-md-6 mb-3">
+        <label for="confirmPassword" class="form-label">Confirm Password</label>
+        <div class="password-input-wrapper">
+          <input 
+            type="password" 
+            class="form-control <%= e.confirmPassword ? 'is-invalid' : '' %>" 
+            id="confirmPassword" 
+            name="confirmPassword" 
+            placeholder="Re-enter password" 
+            required>
+          <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('confirmPassword', this)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="eye-icon eye-open" viewBox="0 0 16 16">
+              <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+              <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="eye-icon eye-closed" style="display:none;" viewBox="0 0 16 16">
+              <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
+              <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
+              <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="validation-feedback" id="confirmPassword-feedback"></div>
+        <% if (e.confirmPassword) { %><div class="invalid-feedback d-block"><%= e.confirmPassword %></div><% } %>
+      </div>
+    </div>
+
+    <!-- Gender -->
+    <div class="mb-3">
+      <label class="form-label d-block">Gender</label>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="gender" id="male" value="male" <%= v.gender === 'male' ? 'checked' : '' %> >
+        <label class="form-check-label" for="male">Male</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="gender" id="female" value="female" <%= v.gender === 'female' ? 'checked' : '' %> >
+        <label class="form-check-label" for="female">Female</label>
+      </div>
+      <% if (e.gender) { %><div class="text-danger small mt-1"><%= e.gender %></div><% } %>
+    </div>
+
+    <!-- Hobbies -->
+    <div class="mb-3">
+      <label class="form-label d-block">Hobbies (Optional)</label>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="hobbies" id="reading" value="reading" <%= v.hobbies?.includes('reading') ? 'checked' : '' %> >
+        <label class="form-check-label" for="reading">Reading</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="hobbies" id="music" value="music" <%= v.hobbies?.includes('music') ? 'checked' : '' %> >
+        <label class="form-check-label" for="music">Music</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="hobbies" id="sports" value="sports" <%= v.hobbies?.includes('sports') ? 'checked' : '' %> >
+        <label class="form-check-label" for="sports">Sports</label>
+      </div>
+    </div>
+
+    <!-- City -->
+    <div class="mb-3">
+      <label for="city" class="form-label">City</label>
+      <select class="form-select <%= e.city ? 'is-invalid' : '' %>" id="city" name="city" required>
+        <option value="">-- Select City --</option>
+        <option value="Nagpur" <%= v.city === 'Nagpur' ? 'selected' : '' %>>Nagpur</option>
+        <option value="Delhi" <%= v.city === 'Delhi' ? 'selected' : '' %>>Delhi</option>
+        <option value="Mumbai" <%= v.city === 'Mumbai' ? 'selected' : '' %>>Mumbai</option>
+        <option value="Kolkata" <%= v.city === 'Kolkata' ? 'selected' : '' %>>Kolkata</option>
+      </select>
+      <% if (e.city) { %><div class="invalid-feedback"><%= e.city %></div><% } %>
+    </div>
+
+    <!-- Terms -->
+    <div class="mb-4 form-check">
+      <input type="checkbox" class="form-check-input <%= e.terms ? 'is-invalid' : '' %>" id="terms" name="terms" value="agree" <%= v.terms ? 'checked' : '' %> >
+      <label class="form-check-label" for="terms">I agree to the terms and conditions</label>
+      <% if (e.terms) { %><div class="text-danger small mt-1"><%= e.terms %></div><% } %>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Submit Registration</button>
+
+  </form>
+</div>
+</div>
+    </div>
+  </main>
+
+  <footer class="bg-dark text-white text-center py-3">
+    <p class="mb-0">© <%= new Date().getFullYear() %> MyApp — All rights reserved.</p>
+  </footer>
+
+  <!-- Client-Side Validation Script -->
+  <script src="/js/validation.js"></script>
+  <script src="/js/router.js"></script>
+</body>
+</html>

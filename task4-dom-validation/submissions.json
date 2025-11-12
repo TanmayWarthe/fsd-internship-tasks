@@ -1,0 +1,25 @@
+[
+  {
+    "fullname": "Tanmay Warthe",
+    "email": "docsvault.edu.tempdata@gmail.com",
+    "gender": "male",
+    "hobbies": [
+      "music"
+    ],
+    "city": "Nagpur",
+    "agreed": true,
+    "submittedAt": "2025-11-12T15:24:37.209Z"
+  },
+    {
+        "fullname": "John Doe",
+        "email": "johndoe@example.com",
+        "gender": "male",
+        "hobbies": [
+            "sports",
+            "reading"
+        ],
+        "city": "New York",
+        "agreed": false,
+        "submittedAt": "2025-11-13T10:15:00.000Z"
+    }
+]
